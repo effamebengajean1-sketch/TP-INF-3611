@@ -1,0 +1,86 @@
+---
+# Variables globales
+group_name: "students-inf-361"
+quota_size_gb: 15
+memory_limit_percent: 20
+default_shell: "/bin/bash"
+ssh_port: 2222
+
+# Configuration email
+smtp_server: "smtp.gmail.com"
+smtp_port: 587
+smtp_username: "admin@inf3611.uy1.cm"
+smtp_password: "your_smtp_password"
+email_from: "admin@inf3611.uy1.cm"
+
+# Liste des utilisateurs
+users:
+  - username: "nehemie_hapsibisie"
+    password: "Pass10"
+    full_name: "Nehemie Hapsibisie"
+    phone: "+237677889900"
+    email: "nehemiehapsibisie@gmail.com"
+    preferred_shell: "/bin/bash"
+
+  - username: "klebertsonke"
+    password: "N@ruto2005"
+    full_name: "Maxime Sonke"
+    phone: "+237677889901"
+    email: "maximesonke06@gmail.com"
+    preferred_shell: "/bin/bash"
+
+  - username: "kwata"
+    password: "KWATA"
+    full_name: "Marie-René Kwata"
+    phone: "+237677889902"
+    email: "marie-rene.kwata@facsciences-uy1.cm"
+    preferred_shell: "/bin/bash"
+
+  - username: "fitzgerald_ngue"
+    password: "01/08/2003"
+    full_name: "Fitzgerald Nguembong"
+    phone: "+237677889903"
+    email: "nguembongandrefitzgerald2003@gmail.com"
+    preferred_shell: "/bin/bash"
+
+  - username: "jtf"
+    password: "vps@teste"
+    full_name: "Fabien Junior"
+    phone: "+237677889904"
+    email: "fabien.junior@facsciences-uy1.cm"
+    preferred_shell: "/bin/bash"
+
+  - username: "user26"
+    password: "Ketsia123"
+    full_name: "Marielle Nono"
+    phone: "+237677889905"
+    email: "nonomarielle06@gmail.com"
+    preferred_shell: "/bin/bash"
+
+  - username: "moussa25"
+    password: "NguebiTigue2000"
+    full_name: "Madariya Tigue"
+    phone: "+237677889906"
+    email: "madariya.tigue@facsciences-uy1.cm"
+    preferred_shell: "/bin/zsh"
+
+  - username: "kaezer"
+    password: "MiguelPapou70@"
+    full_name: "Miguel Azab"
+    phone: "+237677889907"
+    email: "miguel.azab@facsciences-uy1.cm"
+    preferred_shell: "/bin/bash"
+
+  - username: "melissa"
+    password: "meli2k04"
+    full_name: "Félicité Mangui"
+    phone: "+237677889908"
+    email: "felicite.mangui@facsciences-uy1.cm"
+    preferred_shell: "/bin/bash"
+
+  - username: "roostkiller"
+    password: "MIGUEl@237"
+    full_name: "Freed Chekem"
+    phone: "+237677889909"
+    email: "freedchekem745@gmail.com"
+    preferred_shell: "/bin/bash"

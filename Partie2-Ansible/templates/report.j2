@@ -1,0 +1,40 @@
+RAPPORT DE CRÉATION D'UTILISATEURS
+TP INF 3611 - Administration Systèmes
+========================================
+Date : {{ ansible_date_time.date }}
+Heure : {{ ansible_date_time.time }}
+Serveur : {{ ansible_hostname }}
+IP : {{ ansible_default_ipv4.address }}
+Groupe : {{ group_name }}
+Nombre d'utilisateurs : {{ users|length }}
+
+LISTE DES UTILISATEURS CRÉÉS :
+{% for user in users %}
+{{ loop.index }}. {{ user.username }}
+   • Nom complet : {{ user.full_name }}
+   • Email : {{ user.email }}
+   • Téléphone : {{ user.phone }}
+   • Shell : {{ user.preferred_shell|default(default_shell) }}
+   • Groupe : {{ group_name }}, sudo
+{% endfor %}
+
+CONFIGURATIONS APPLIQUÉES :
+• Quota disque : {{ quota_size_gb }} Go par utilisateur
+• Limite mémoire : {{ memory_limit_percent }}% RAM
+• Port SSH : {{ ssh_port }}
+• Commande 'su' désactivée pour le groupe
+
+EMAILS GÉNÉRÉS :
+{% for user in users %}
+• {{ user.username }} -> {{ user.email }}
+  Fichier : /tmp/email_{{ user.username }}.txt
+{% endfor %}
+
+COMMANDES DE VÉRIFICATION :
+1. Vérifier les utilisateurs : getent group {{ group_name }}
+2. Tester un utilisateur : id {{ users[0].username }}
+3. Vérifier les quotas : repquota -a
+4. Vérifier l'accès sudo : sudo -U {{ users[0].username }} -l
+
+FIN DU RAPPORT
+========================================

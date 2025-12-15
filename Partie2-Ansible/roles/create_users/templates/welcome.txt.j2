@@ -1,0 +1,26 @@
+==========================================
+BIENVENUE SUR LE SERVEUR TP INF 3611
+==========================================
+
+Cher(e) {{ item.full_name }},
+
+Votre compte {{ item.username }} a été créé avec succès.
+
+INFORMATIONS :
+• Serveur : {{ ansible_hostname }}
+• Date : {{ ansible_date_time.date }}
+• Shell : {{ item.preferred_shell | default(default_shell) }}
+• Groupe : {{ group_name }}
+
+LIMITATIONS :
+• Espace disque : {{ quota_size_gb }} Go maximum
+• Mémoire RAM : {{ memory_limit_percent }}% maximum
+• Accès sudo : Activé
+• Commande 'su' : Désactivée pour le groupe
+
+IMPORTANT :
+Vous devez changer votre mot de passe à la première connexion avec :
+$ passwd
+
+Pour l'aide, contactez l'administrateur.
+==========================================

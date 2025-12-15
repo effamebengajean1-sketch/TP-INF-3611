@@ -1,0 +1,44 @@
+1. PROCÉDURE CORRECTE POUR MODIFIER LA CONFIGURATION SSH :
+
+Étape 1 - Sauvegarde :
+sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup_$(date +%Y%m%d_%H%M%S)
+
+Étape 2 - Modification :
+sudo nano /etc/ssh/sshd_config
+
+Étape 3 - Test syntaxique :
+sudo sshd -t
+
+Étape 4 - Redémarrage (si pas d'erreur) :
+sudo systemctl restart sshd
+
+Étape 5 - Garder une session SSH ouverte pendant les tests
+Étape 6 - Tester la connexion depuis une nouvelle session
+
+2. RISQUE PRINCIPAL SI PROCÉDURE NON RESPECTÉE :
+
+Perte totale d'accès SSH au serveur.
+Si une erreur de configuration survient et que SSH redémarre avec une config invalide,
+toutes les futures connexions SSH échoueront.
+Solution : nécessite un accès console physique ou via l'interface d'administration du VPS.
+
+3. CINQ PARAMÈTRES DE SÉCURITÉ SSH :
+
+1. Port 2222
+   Justification : Évite les scans automatiques sur le port 22 standard (99% des attaques).
+
+2. PermitRootLogin no
+   Justification : Bloque la connexion directe en tant que root, forçant les attaquants
+   à deviner à la fois un nom d'utilisateur ET un mot de passe.
+
+3. PasswordAuthentication no
+   Justification : Désactive l'authentification par mot de passe (vulnérable au brute-force)
+   et force l'utilisation de clés SSH cryptographiques.
+
+4. MaxAuthTries 3
+   Justification : Limite à 3 tentatives de connexion échouées avant déconnexion,
+   rendant les attaques par brute-force mathématiquement impossibles.
+
+5. Protocol 2
+   Justification : SSH version 1 a des vulnérabilités cryptographiques connues.
+   SSHv2 offre des algorithmes modernes et une sécurité éprouvée.

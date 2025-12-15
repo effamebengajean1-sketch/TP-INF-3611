@@ -1,0 +1,38 @@
+---
+- name: Automatisation création utilisateurs TP INF 3611
+  hosts: servers
+  become: yes
+  gather_facts: yes
+  
+  vars_files:
+    - group_vars/all.yml
+  
+  roles:
+    - role: create_users
+  
+  tasks:
+    - name: Afficher le récapitulatif
+      debug:
+        msg: |
+          ==========================================
+          CRÉATION DES UTILISATEURS TERMINÉE
+          ==========================================
+          Nombre d'utilisateurs créés : {{ users|length }}
+          Groupe : {{ group_name }}
+          Serveur : {{ ansible_hostname }}
+          IP : {{ ansible_default_ipv4.address }}
+          Date : {{ ansible_date_time.date }}
+          ==========================================
+          
+          Pour vérifier :
+          $ getent group {{ group_name }}
+          $ id {{ users[0].username }}
+          $ sudo -U {{ users[0].username }} -l
+          ==========================================
+      
+    - name: Sauvegarder le rapport
+      template:
+        src: report.j2
+        dest: "/root/user_creation_report_{{ ansible_date_time.date }}.txt"
+      delegate_to: localhost
+      run_once: yes

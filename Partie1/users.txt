@@ -1,0 +1,8 @@
+# Format: username;password;full_name;phone;email;shell
+user01;Pass001;Atalia Nono;+237611223344;alice@univ-yaounde.cm;/bin/bash
+user02;Pass002;Calvin Sylviane;+237622334455;bob@univ-yaounde.cm;/bin/bash
+user03;Pass003;Charlenne Brown;+237633445566;charlie@univ-yaounde.cm;/bin/zsh
+user04;Pass004;shella Wilson;+237644556677;david@univ-yaounde.cm;/bin/bash
+user05;Pass005;Eva clara;+237655667788;eva@univ-yaounde.cm;/bin/bash
+user24;Pass024;Ines gonou;+237688990011;tech@univ-yaounde.cm;/bin/bash
+user26;Pass026;Ketsia Nono;+237679560249;ketsia@univ-yaounde.cm;/bin/bash

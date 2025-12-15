@@ -1,0 +1,51 @@
+Subject: Bienvenue sur le serveur TP INF 3611 - Votre compte a été créé
+
+Cher(e) {{ user.full_name }},
+
+Nous avons le plaisir de vous informer que votre compte a été créé avec succès 
+sur le serveur de travaux pratiques INF 3611 - Administration Systèmes et Réseaux.
+
+Voici vos informations de connexion :
+
+INFORMATIONS DU SERVEUR :
+• Adresse IP : {{ server_ip }}
+• Port SSH : {{ ssh_port }}
+
+VOS IDENTIFIANTS :
+• Nom d'utilisateur : {{ user.username }}
+• Mot de passe initial : {{ user.password }}
+• Shell par défaut : {{ user.preferred_shell }}
+
+COMMANDES DE CONNEXION :
+
+1. Pour vous connecter au serveur :
+   ssh -p {{ ssh_port }} {{ user.username }}@{{ server_ip }}
+
+2. Pour transmettre votre clé publique SSH :
+
+   Sur Linux/Mac :
+   ssh-copy-id -p {{ ssh_port }} {{ user.username }}@{{ server_ip }}
+
+   Sur Windows (PowerShell) :
+   type $env:USERPROFILE\.ssh\id_rsa.pub | ssh -p {{ ssh_port }} {{ user.username }}@{{ server_ip }} "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+
+   Sur Windows (Git Bash) :
+   cat ~/.ssh/id_rsa.pub | ssh -p {{ ssh_port }} {{ user.username }}@{{ server_ip }} "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+
+IMPORTANT :
+1. Vous devez changer votre mot de passe à la première connexion
+2. Espace disque limité à {{ quota_size_gb }} Go
+3. Utilisation mémoire limitée à {{ memory_limit_percent }}% de la RAM
+4. Accès sudo activé (commande 'su' désactivée)
+
+CONSEILS DE SÉCURITÉ :
+• Changez votre mot de passe immédiatement après la première connexion
+• Utilisez une clé SSH pour une authentification plus sécurisée
+• Ne partagez jamais vos identifiants
+
+Pour toute assistance, contactez l'administrateur à l'adresse : admin@inf3611.uy1.cm
+
+Cordialement,
+L'équipe d'administration
+TP INF 3611 - Université de Yaoundé I
+Date de création : {{ ansible_date_time.date }}

@@ -1,0 +1,65 @@
+[2025-12-03 05:39:19] === DÉBUT SCRIPT ADAPTÉ ===
+[2025-12-03 05:39:19] Groupe cible: students-inf-361
+[2025-12-03 05:39:19] Permissions disponibles: usermod, passwd, groupmod, pkill
+[2025-12-03 05:39:19] ATTENTION: Groupe students-inf-361 n'existe pas
+[2025-12-03 05:39:19]   -> Demander à l'admin: sudo groupadd students-inf-361
+[2025-12-03 05:39:19] Lecture du fichier users.txt
+[2025-12-03 05:39:19] --- Traitement de: user01 ---
+[2025-12-03 05:39:19] ✗ Utilisateur user01 n'existe pas
+[2025-12-03 05:39:19]   -> ACTION REQUISE: sudo useradd -m -c 'Atalia Nono,+237611223344,alice@univ-yaounde.cm' -s /bin/bash user01
+[2025-12-03 05:39:19] --- Traitement de: user02 ---
+[2025-12-03 05:39:19] ✗ Utilisateur user02 n'existe pas
+[2025-12-03 05:39:19]   -> ACTION REQUISE: sudo useradd -m -c 'Calvin Sylviane,+237622334455,bob@univ-yaounde.cm' -s /bin/bash user02
+[2025-12-03 05:39:19] --- Traitement de: user03 ---
+[2025-12-03 05:39:19] ✗ Utilisateur user03 n'existe pas
+[2025-12-03 05:39:19]   -> ACTION REQUISE: sudo useradd -m -c 'Charlenne Brown,+237633445566,charlie@univ-yaounde.cm' -s /bin/zsh user03
+[2025-12-03 05:39:19] --- Traitement de: user04 ---
+[2025-12-03 05:39:19] ✗ Utilisateur user04 n'existe pas
+[2025-12-03 05:39:19]   -> ACTION REQUISE: sudo useradd -m -c 'shella Wilson,+237644556677,david@univ-yaounde.cm' -s /bin/bash user04
+[2025-12-03 05:39:19] --- Traitement de: user05 ---
+[2025-12-03 05:39:19] ✗ Utilisateur user05 n'existe pas
+[2025-12-03 05:39:19]   -> ACTION REQUISE: sudo useradd -m -c 'Eva clara,+237655667788,eva@univ-yaounde.cm' -s /bin/bash user05
+[2025-12-03 05:39:19] --- Traitement de: user24 ---
+[2025-12-03 05:39:19] ✓ Utilisateur existe
+[2025-12-03 05:39:20]   Shell actuel: /bin/bash
+[2025-12-03 05:39:20]   Shell souhaité: /bin/bash
+[2025-12-03 05:39:20]   Infos GECOS: Ines gonou,+237688990011,tech@univ-yaounde.cm
+[2025-12-03 05:39:20]   -> À faire: sudo usermod -c 'Ines gonou,+237688990011,tech@univ-yaounde.cm' user24
+[2025-12-03 05:39:20]   Mot de passe par défaut: Pass024
+[2025-12-03 05:39:20]   -> À faire: sudo passwd user24
+[2025-12-03 05:39:20]      (Entrer manuellement: Pass024)
+[2025-12-03 05:39:20]   -> Forcer changement: sudo chage -d 0 user24
+[2025-12-03 05:39:20]   -> À faire: sudo usermod -aG sudo user24
+[2025-12-03 05:39:20]   -> Bloquer 'su': sudo tee /etc/group.sudo.deny <<<'students-inf-361'
+[2025-12-03 05:39:20]   -> Créer: echo -e "Bienvenue Ines gonou!\nCompte: user24\nServeur: vmi2924532" > /home/user24/WELCOME.txt
+[2025-12-03 05:39:20]   -> Ajouter à .bashrc: echo 'cat ~/WELCOME.txt' >> /home/user24/.bashrc
+[2025-12-03 05:39:20]   -> Quota 15GB: sudo setquota -u user24 15G 15G 0 0 /home
+[2025-12-03 05:39:20]   -> Limite mémoire: echo 'user24 hard memlock 20%' >> /etc/security/limits.conf
+[2025-12-03 05:39:20] --- Traitement de: user26 ---
+[2025-12-03 05:39:20] ✓ Utilisateur existe
+[2025-12-03 05:39:20]   Shell actuel: /bin/bash
+[2025-12-03 05:39:20]   Shell souhaité: /bin/bash
+[2025-12-03 05:39:20]   Infos GECOS: Ketsia Nono,+237679560249,ketsia@univ-yaounde.cm
+[2025-12-03 05:39:20]   -> À faire: sudo usermod -c 'Ketsia Nono,+237679560249,ketsia@univ-yaounde.cm' user26
+[2025-12-03 05:39:20]   Mot de passe par défaut: Pass026
+[2025-12-03 05:39:20]   -> À faire: sudo passwd user26
+[2025-12-03 05:39:20]      (Entrer manuellement: Pass026)
+[2025-12-03 05:39:20]   -> Forcer changement: sudo chage -d 0 user26
+[2025-12-03 05:39:20]   -> À faire: sudo usermod -aG sudo user26
+[2025-12-03 05:39:20]   -> Bloquer 'su': sudo tee /etc/group.sudo.deny <<<'students-inf-361'
+[2025-12-03 05:39:20]   -> Créer: echo -e "Bienvenue Ketsia Nono!\nCompte: user26\nServeur: vmi2924532" > /home/user26/WELCOME.txt
+[2025-12-03 05:39:20]   -> Ajouter à .bashrc: echo 'cat ~/WELCOME.txt' >> /home/user26/.bashrc
+[2025-12-03 05:39:20]   -> Quota 15GB: sudo setquota -u user26 15G 15G 0 0 /home
+[2025-12-03 05:39:20]   -> Limite mémoire: echo 'user26 hard memlock 20%' >> /etc/security/limits.conf
+[2025-12-03 05:39:20] === RAPPORT ===
+[2025-12-03 05:39:20] Utilisateurs dans fichier: 7
+[2025-12-03 05:39:20] Utilisateurs configurables: 2
+[2025-12-03 05:39:20] Actions nécessitant admin:
+[2025-12-03 05:39:20]   1. Création groupe: sudo groupadd students-inf-361
+[2025-12-03 05:39:20]   2. Création users manquants: sudo useradd ...
+[2025-12-03 05:39:20]   3. Configuration quotas: sudo setquota
+[2025-12-03 05:39:20] 
+[2025-12-03 05:39:20] === FIN SCRIPT ADAPTÉ ===
+[2025-12-03 05:39:20] NOTE: Ce script génère les commandes nécessaires
+[2025-12-03 05:39:20]       Exécuter les commandes 'À faire:' manuellement
+[2025-12-03 05:39:20] Script de commandes généré: commands_to_execute_053920.sh

@@ -1,0 +1,148 @@
+---
+# Tasks pour la création d'utilisateurs
+
+- name: Installer les paquets requis
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop:
+    - quota
+    - python3-pip
+    - mailutils
+  when: ansible_os_family == 'Debian'
+
+- name: Installer les paquets requis (RedHat)
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - quota
+    - python3-pip
+    - mailx
+  when: ansible_os_family == 'RedHat'
+
+- name: Installer bibliothèque Python pour emails
+  pip:
+    name: "{{ item }}"
+  loop:
+    - jinja2
+    - email-validator
+
+- name: Créer le groupe principal
+  group:
+    name: "{{ group_name }}"
+    state: present
+
+- name: Installer les shells manquants
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ shells_to_install }}"
+  when: shells_to_install|length > 0
+  vars:
+    shells_to_install: "{{ users | map(attribute='preferred_shell') | unique | select('search', 'zsh|fish|tcsh|ksh') | list }}"
+
+- name: Créer les utilisateurs
+  user:
+    name: "{{ item.username }}"
+    comment: "{{ item.full_name }}"
+    shell: "{{ item.preferred_shell | default(default_shell) }}"
+    groups: "{{ group_name }},sudo"
+    append: yes
+    create_home: yes
+    home: "/home/{{ item.username }}"
+    password: "{{ item.password | password_hash('sha512') }}"
+    update_password: always
+  loop: "{{ users }}"
+  register: users_created
+
+- name: Configurer informations supplémentaires
+  command: "chfn -f '{{ item.item.full_name }}' -w '{{ item.item.phone }}' -o '{{ item.item.email }}' {{ item.item.username }}"
+  when: item.changed
+  loop: "{{ users_created.results }}"
+
+- name: Forcer changement mot de passe à première connexion
+  command: "chage -d 0 {{ item.item.username }}"
+  when: item.changed
+  loop: "{{ users_created.results }}"
+
+- name: Configurer les quotas
+  block:
+    - name: Activer les quotas sur la partition racine
+      mount:
+        name: /
+        src: "/dev/{{ root_device }}"
+        fstype: "{{ root_fstype }}"
+        opts: "defaults,usrquota"
+        state: present
+      vars:
+        root_device: "{{ ansible_mounts | selectattr('mount', 'equalto', '/') | map(attribute='device') | first }}"
+        root_fstype: "{{ ansible_mounts | selectattr('mount', 'equalto', '/') | map(attribute='fstype') | first }}"
+
+    - name: Appliquer les quotas
+      command: "setquota -u {{ item.username }} 0 {{ quota_size_gb * 1024 * 1024 }} 0 0 /"
+      loop: "{{ users }}"
+  when: quota_enabled | default(true)
+
+- name: Configurer les limites mémoire avec systemd
+  block:
+    - name: Créer configuration systemd
+      template:
+        src: user_slice.conf.j2
+        dest: "/etc/systemd/system/user-{{ item.username }}.slice.d/50-memory.conf"
+      loop: "{{ users }}"
+
+    - name: Recharger systemd
+      systemd:
+        daemon_reload: yes
+  when: ansible_service_mgr == "systemd"
+
+- name: Désactiver la commande su pour le groupe
+  lineinfile:
+    path: /etc/pam.d/su
+    line: "auth required pam_wheel.so deny={{ group_name }}"
+    state: present
+  notify: restart sshd
+
+- name: Créer les fichiers de bienvenue
+  template:
+    src: welcome.txt.j2
+    dest: "/home/{{ item.username }}/WELCOME.txt"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: '0644'
+  loop: "{{ users }}"
+
+- name: Configurer .bashrc pour afficher le message
+  blockinfile:
+    path: "/home/{{ item.username }}/.bashrc"
+    block: |
+      # Message de bienvenue TP INF 3611
+      if [ -f ~/WELCOME.txt ]; then
+          echo ""
+          cat ~/WELCOME.txt
+      fi
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+  loop: "{{ users }}"
+
+- name: Générer les emails de bienvenue
+  template:
+    src: welcome_email.j2
+    dest: "/tmp/email_{{ item.username }}.txt"
+  loop: "{{ users }}"
+  delegate_to: localhost
+  run_once: yes
+  register: emails_generated
+
+- name: Envoyer les emails (simulation)
+  debug:
+    msg: |
+      Email généré pour {{ item.item.username }}
+      Fichier : /tmp/email_{{ item.item.username }}.txt
+      Destinataire : {{ item.item.email }}
+      
+      Pour envoyer réellement, configurez SMTP dans group_vars/all.yml
+  loop: "{{ emails_generated.results }}"
+  when: emails_generated.changed
